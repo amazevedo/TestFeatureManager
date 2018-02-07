@@ -488,11 +488,16 @@
             <param name="SystemID">GUID of the system</param>
             <returns>List of features enabled for this System</returns>
         </member>
-        <member name="M:FeatureManager.Controllers.TogglerController.SetToggles(System.Int32,System.String,System.Boolean,System.Boolean,System.Boolean,System.Collections.Generic.List{System.Guid})">
+        <member name="M:FeatureManager.Controllers.TogglerController.SetToggles(System.Int32,System.String,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Collections.Generic.List{System.Guid})">
             <summary>
             Function to set toggle values for a specific Feature
             </summary>
             <param name="FeatureID">Feature Identifyer</param>
+            <param name="Version">Feature Version</param>
+            <param name="isButtonBlue">isButtonBlue Status</param>
+            <param name="isButtonGreen">isButtonBlue Status</param>
+            <param name="isButtonRed">isButtonBlue Status</param>
+            <param name="SystemList">List of Guid's to Ignore or Include on toggle</param>
             <returns>Status Code of the operation</returns>
         </member>
     </members>

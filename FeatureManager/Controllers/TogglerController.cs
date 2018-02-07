@@ -25,7 +25,11 @@ namespace FeatureManager.Controllers
             if (!db.Systems.Any(a => a.SystemIdentifier.Equals(SystemID)))
                 return NotFound();
 
-            return Ok(db.FeatureVersions.Where(w => w.IsEnabledIn.Any(a => a.SystemIdentifier.Equals(SystemID)))
+            return Ok(db.FeatureVersions.Where(w =>
+                    !w.IsDisabledIn.Any(a => a.SystemIdentifier.Equals(SystemID))
+                    && (w.IsEnabledIn.Any(a => a.SystemIdentifier.Equals(SystemID))
+                    || w.IsEnabledIn.Count() == 0)
+                    )
                 .GroupBy(g => g.FeatureID)
                 .Select(s => s.OrderByDescending(o => o.VersionMajor)
                     .ThenByDescending(o => o.VersionMinor)
@@ -44,9 +48,15 @@ namespace FeatureManager.Controllers
         /// Function to set toggle values for a specific Feature
         /// </summary>
         /// <param name="FeatureID">Feature Identifyer</param>
+        /// <param name="Version">Feature Version</param>
+        /// <param name="isButtonBlue">isButtonBlue Status</param>
+        /// <param name="isButtonGreen">isButtonBlue Status</param>
+        /// <param name="isButtonRed">isButtonBlue Status</param>
+        /// <param name="SystemList">List of Guid's to Ignore or Include on toggle</param>
         /// <returns>Status Code of the operation</returns>
         [HttpPost]
-        public IHttpActionResult SetToggles(int FeatureID, string Version, bool isButtonBlue, bool isButtonGreen, bool isButtonRed, List<Guid> SystemList)
+        [Route("api/Toggler/{FeatureID}/{Version}/SetToggles/")]
+        public IHttpActionResult SetToggles(int FeatureID, string Version, bool? isButtonBlue, bool? isButtonGreen, bool? isButtonRed, [FromBody] List<Guid> SystemList)
         {
             Version ver = new System.Version(Version);
             FeatureVersion featureVersion = db.FeatureVersions.Where(w => w.VersionMajor.Equals(ver.Major) && w.VersionMinor.Equals(ver.Minor) && w.VersionBuild.Equals(ver.Build) && w.VersionRevision.Equals(ver.Revision) && FeatureID.Equals(FeatureID)).FirstOrDefault();
@@ -55,7 +65,7 @@ namespace FeatureManager.Controllers
                 return NotFound();
             }
 
-            if (isButtonBlue)
+            if (isButtonBlue.HasValue && isButtonBlue.Value)
             {
                 featureVersion.IsEnabledIn = new List<Models.System>();
                 featureVersion.IsDisabledIn = new List<Models.System>();
@@ -64,14 +74,14 @@ namespace FeatureManager.Controllers
             }
             else
             {
-                if (isButtonGreen)
+                if (isButtonGreen.HasValue && isButtonGreen.Value)
                 {
                     featureVersion.IsEnabledIn = db.Systems.Where(w => SystemList.Contains(w.SystemIdentifier)).ToList();
                     featureVersion.IsDisabledIn = new List<Models.System>();
                     db.SaveChanges();
                     return Ok();
                 }
-                else if (isButtonRed)
+                else if (isButtonRed.HasValue && isButtonRed.Value)
                 {
                     featureVersion.IsEnabledIn = new List<Models.System>();
                     featureVersion.IsDisabledIn = db.Systems.Where(w => SystemList.Contains(w.SystemIdentifier)).ToList();

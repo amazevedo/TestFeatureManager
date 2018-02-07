@@ -8,6 +8,7 @@ namespace FeatureManager.Models
     public class Feature
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FeatureId { get; set; }
 
         public string FeatureName { get; set; }
@@ -22,7 +23,7 @@ namespace FeatureManager.Models
         [Column(Order = 1)]
         public int VersionMajor { get; set; }
         [Key]
-        [Column(Order =2)]
+        [Column(Order = 2)]
         public int VersionMinor { get; set; }
         [Key]
         [Column(Order = 3)]
