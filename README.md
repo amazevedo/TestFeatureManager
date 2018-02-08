@@ -17,6 +17,8 @@ Run the Web Application and the Database will be created.
 
 Once you run the application it will open a website that has a section for the API documentation and EndPoints
 
+All endpoints have basic authentication, without validation of user (for test purposes)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
