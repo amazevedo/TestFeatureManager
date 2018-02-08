@@ -19,6 +19,7 @@ namespace FeatureManager.Controllers
         /// <param name="SystemID">GUID of the system</param>
         /// <returns>List of features enabled for this System</returns>
         [HttpGet]
+        [Authorize]
         [Route("api/Toggler/SystemFeatures/{SystemID}")]
         public IHttpActionResult SystemFeatures(Guid SystemID)
         {
@@ -55,11 +56,12 @@ namespace FeatureManager.Controllers
         /// <param name="SystemList">List of Guid's to Ignore or Include on toggle</param>
         /// <returns>Status Code of the operation</returns>
         [HttpPost]
+        [Authorize]
         [Route("api/Toggler/{FeatureID}/{Version}/SetToggles/")]
-        public IHttpActionResult SetToggles(int FeatureID, string Version, bool? isButtonBlue, bool? isButtonGreen, bool? isButtonRed, [FromBody] List<Guid> SystemList)
+        public IHttpActionResult SetToggles(int FeatureID, string Version, [FromBody] List<Guid> SystemList, bool? isButtonBlue = false, bool? isButtonGreen = false, bool? isButtonRed = false)
         {
             Version ver = new System.Version(Version);
-            FeatureVersion featureVersion = db.FeatureVersions.Where(w => w.VersionMajor.Equals(ver.Major) && w.VersionMinor.Equals(ver.Minor) && w.VersionBuild.Equals(ver.Build) && w.VersionRevision.Equals(ver.Revision) && FeatureID.Equals(FeatureID)).FirstOrDefault();
+            FeatureVersion featureVersion = db.FeatureVersions.Where(w => w.VersionMajor.Equals(ver.Major) && w.VersionMinor.Equals(ver.Minor) && w.VersionBuild.Equals(ver.Build) && w.VersionRevision.Equals(ver.Revision) && w.FeatureID.Equals(FeatureID)).FirstOrDefault();
             if (featureVersion == null)
             {
                 return NotFound();

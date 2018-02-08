@@ -15,12 +15,23 @@ namespace FeatureManager.Controllers
         private FeaturesContext db = new FeaturesContext();
 
         // GET: api/ManagerSystems
+        /// <summary>
+        /// List Registered Systems
+        /// </summary>
+        /// <returns>List of all Systems</returns>
+        [Authorize]
         public IQueryable<Models.System> GetSystems()
         {
             return db.Systems;
         }
 
         // GET: api/ManagerSystems/5
+        /// <summary>
+        /// Getting a single System
+        /// </summary>
+        /// <param name="id">System GUID</param>
+        /// <returns>Single System</returns>
+        [Authorize]
         [ResponseType(typeof(Models.System))]
         public async Task<IHttpActionResult> GetSystem(Guid id)
         {
@@ -34,6 +45,13 @@ namespace FeatureManager.Controllers
         }
 
         // PUT: api/ManagerSystems/5
+        /// <summary>
+        /// Update System
+        /// </summary>
+        /// <param name="id">System Identifier GUID</param>
+        /// <param name="system">New System to update</param>
+        /// <returns>StatusCode of the operation</returns>
+        [Authorize]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutSystem(Guid id, Models.System system)
         {
@@ -69,6 +87,12 @@ namespace FeatureManager.Controllers
         }
 
         // POST: api/ManagerSystems
+        /// <summary>
+        /// Add new System
+        /// </summary>
+        /// <param name="system">New system to add</param>
+        /// <returns>System added</returns>
+        [Authorize]
         [ResponseType(typeof(Models.System))]
         public async Task<IHttpActionResult> PostSystem(Models.System system)
         {
@@ -99,6 +123,12 @@ namespace FeatureManager.Controllers
         }
 
         // DELETE: api/ManagerSystems/5
+        /// <summary>
+        /// Delete System
+        /// </summary>
+        /// <param name="id">System Identifier of the system to delete</param>
+        /// <returns>Status Code of the operation</returns>
+        [Authorize]
         [ResponseType(typeof(Models.System))]
         public async Task<IHttpActionResult> DeleteSystem(Guid id)
         {

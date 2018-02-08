@@ -481,6 +481,131 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:FeatureManager.Code.AuthenticatorHandler.ParseAuthorizationHeader(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Parses the Authorization header and creates user credentials
+            </summary>
+            <param name="actionContext"></param>
+        </member>
+        <member name="T:FeatureManager.Code.BasicAuthenticationIdentity">
+            <summary>
+            Custom Identity that adds a password captured by basic authentication
+            to allow for an auth filter to do custom authorization
+            </summary>
+        </member>
+        <member name="P:FeatureManager.Code.BasicAuthenticationIdentity.Password">
+            <summary>
+            Basic Auth Password for custom authentication
+            </summary>
+        </member>
+        <member name="M:FeatureManager.Controllers.FeatureVersionsController.GetFeatureVersions">
+            <summary>
+            List Registered Features Versions
+            </summary>
+            <returns>List of all Features Versions</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.FeatureVersionsController.GetFeatureVersion(System.Int32,System.String)">
+            <summary>
+            Get a especific Feature Version
+            </summary>
+            <param name="id">Feature ID</param>
+            <param name="version">Version Number</param>
+            <returns>Single Single Feature Version</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.FeatureVersionsController.PutFeatureVersion(System.Int32,System.String,FeatureManager.Models.FeatureVersion)">
+            <summary>
+            Update Feature Version
+            </summary>
+            <param name="id">Feature Version ID</param>
+            <param name="version">Version Number</param>
+            <param name="featureVersion">New Feature Version to update</param>
+            <returns>StatusCode of the operation</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.FeatureVersionsController.PostFeatureVersion(FeatureManager.Models.FeatureVersion)">
+            <summary>
+            Add new Feature Version
+            </summary>
+            <param name="featureVersion">New Feature Version to add</param>
+            <returns>Feature Version added</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.FeatureVersionsController.DeleteFeatureVersion(System.Int32,System.String)">
+            <summary>
+            Delete Feature Version
+            </summary>
+            <param name="id">Feature Version ID</param>
+            <param name="version">Version Number</param>
+            <returns>Status Code of the operation</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.ManagerFeaturesController.GetFeatures">
+            <summary>
+            List Registered Features
+            </summary>
+            <returns>List of all Features</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.ManagerFeaturesController.GetFeature(System.Int32)">
+            <summary>
+            Getting a single Feature
+            </summary>
+            <param name="id">Feature ID</param>
+            <returns>Single Feature</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.ManagerFeaturesController.PutFeature(System.Int32,FeatureManager.Models.Feature)">
+            <summary>
+            Update one Feature
+            </summary>
+            <param name="id">Feature ID</param>
+            <param name="feature">New Feature to update</param>
+            <returns>StatusCode of the operation</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.ManagerFeaturesController.PostFeature(FeatureManager.Models.Feature)">
+            <summary>
+            Add new Feature
+            </summary>
+            <param name="feature">New Feature to add</param>
+            <returns>Feature added</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.ManagerFeaturesController.DeleteFeature(System.Int32)">
+            <summary>
+            Delete Feature
+            </summary>
+            <param name="id">Feature ID to be delete</param>
+            <returns>Status Code of the operation</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.ManagerSystemsController.GetSystems">
+            <summary>
+            List Registered Systems
+            </summary>
+            <returns>List of all Systems</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.ManagerSystemsController.GetSystem(System.Guid)">
+            <summary>
+            Getting a single System
+            </summary>
+            <param name="id">System GUID</param>
+            <returns>Single System</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.ManagerSystemsController.PutSystem(System.Guid,FeatureManager.Models.System)">
+            <summary>
+            Update System
+            </summary>
+            <param name="id">System Identifier GUID</param>
+            <param name="system">New System to update</param>
+            <returns>StatusCode of the operation</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.ManagerSystemsController.PostSystem(FeatureManager.Models.System)">
+            <summary>
+            Add new System
+            </summary>
+            <param name="system">New system to add</param>
+            <returns>System added</returns>
+        </member>
+        <member name="M:FeatureManager.Controllers.ManagerSystemsController.DeleteSystem(System.Guid)">
+            <summary>
+            Delete System
+            </summary>
+            <param name="id">System Identifier of the system to delete</param>
+            <returns>Status Code of the operation</returns>
+        </member>
         <member name="M:FeatureManager.Controllers.TogglerController.SystemFeatures(System.Guid)">
             <summary>
             Endpoint to get features for a system
@@ -488,7 +613,7 @@
             <param name="SystemID">GUID of the system</param>
             <returns>List of features enabled for this System</returns>
         </member>
-        <member name="M:FeatureManager.Controllers.TogglerController.SetToggles(System.Int32,System.String,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Collections.Generic.List{System.Guid})">
+        <member name="M:FeatureManager.Controllers.TogglerController.SetToggles(System.Int32,System.String,System.Collections.Generic.List{System.Guid},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
             <summary>
             Function to set toggle values for a specific Feature
             </summary>

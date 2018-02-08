@@ -15,12 +15,23 @@ namespace FeatureManager.Controllers
         private FeaturesContext db = new FeaturesContext();
 
         // GET: api/ManagerFeatures
+        /// <summary>
+        /// List Registered Features
+        /// </summary>
+        /// <returns>List of all Features</returns>
+        [Authorize]
         public IQueryable<Feature> GetFeatures()
         {
             return db.Features;
         }
 
         // GET: api/ManagerFeatures/5
+        /// <summary>
+        /// Getting a single Feature
+        /// </summary>
+        /// <param name="id">Feature ID</param>
+        /// <returns>Single Feature</returns>
+        [Authorize]
         [ResponseType(typeof(Feature))]
         public async Task<IHttpActionResult> GetFeature(int id)
         {
@@ -34,6 +45,13 @@ namespace FeatureManager.Controllers
         }
 
         // PUT: api/ManagerFeatures/5
+        /// <summary>
+        /// Update one Feature
+        /// </summary>
+        /// <param name="id">Feature ID</param>
+        /// <param name="feature">New Feature to update</param>
+        /// <returns>StatusCode of the operation</returns>
+        [Authorize]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutFeature(int id, Feature feature)
         {
@@ -69,6 +87,12 @@ namespace FeatureManager.Controllers
         }
 
         // POST: api/ManagerFeatures
+        /// <summary>
+        /// Add new Feature
+        /// </summary>
+        /// <param name="feature">New Feature to add</param>
+        /// <returns>Feature added</returns>
+        [Authorize]
         [ResponseType(typeof(Feature))]
         public async Task<IHttpActionResult> PostFeature(Feature feature)
         {
@@ -84,6 +108,12 @@ namespace FeatureManager.Controllers
         }
 
         // DELETE: api/ManagerFeatures/5
+        /// <summary>
+        /// Delete Feature
+        /// </summary>
+        /// <param name="id">Feature ID to be delete</param>
+        /// <returns>Status Code of the operation</returns>
+        [Authorize]
         [ResponseType(typeof(Feature))]
         public async Task<IHttpActionResult> DeleteFeature(int id)
         {

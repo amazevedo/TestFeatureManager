@@ -185,12 +185,13 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Code\Authenticator.cs" />
     <Compile Include="Controllers\FeatureVersionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagerFeaturesController.cs" />
     <Compile Include="Controllers\ManagerSystemsController.cs" />
     <Compile Include="Controllers\TogglerController.cs" />
-    <Compile Include="DAL\FeaturesContext.cs" />
+    <Compile Include="Code\FeaturesContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -15,16 +15,30 @@ namespace FeatureManager.Controllers
         private FeaturesContext db = new FeaturesContext();
 
         // GET: api/FeatureVersions
+        /// <summary>
+        /// List Registered Features Versions
+        /// </summary>
+        /// <returns>List of all Features Versions</returns>
+        [Authorize]
         public IQueryable<FeatureVersion> GetFeatureVersions()
         {
             return db.FeatureVersions;
         }
 
-        // GET: api/FeatureVersions/5
+        // GET: api/FeatureVersions/5/1.0.0
+        /// <summary>
+        /// Get a especific Feature Version
+        /// </summary>
+        /// <param name="id">Feature ID</param>
+        /// <param name="version">Version Number</param>
+        /// <returns>Single Single Feature Version</returns>
+        [Authorize]
         [ResponseType(typeof(FeatureVersion))]
-        public async Task<IHttpActionResult> GetFeatureVersion(int id)
+        public async Task<IHttpActionResult> GetFeatureVersion(int id, string version)
         {
-            FeatureVersion featureVersion = await db.FeatureVersions.FindAsync(id);
+            System.Version ver = new System.Version(version);
+            FeatureVersion featureVersion = db.FeatureVersions.Where(w => w.VersionMajor.Equals(ver.Major) && w.VersionMinor.Equals(ver.Minor) && w.VersionBuild.Equals(ver.Build) && w.VersionRevision.Equals(ver.Revision) && w.FeatureID.Equals(id)).FirstOrDefault();
+
             if (featureVersion == null)
             {
                 return NotFound();
@@ -34,8 +48,16 @@ namespace FeatureManager.Controllers
         }
 
         // PUT: api/FeatureVersions/5
+        /// <summary>
+        /// Update Feature Version
+        /// </summary>
+        /// <param name="id">Feature Version ID</param>
+        /// <param name="version">Version Number</param>
+        /// <param name="featureVersion">New Feature Version to update</param>
+        /// <returns>StatusCode of the operation</returns>
+        [Authorize]
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutFeatureVersion(int id, FeatureVersion featureVersion)
+        public async Task<IHttpActionResult> PutFeatureVersion(int id, string version, FeatureVersion featureVersion)
         {
             if (!ModelState.IsValid)
             {
@@ -55,7 +77,7 @@ namespace FeatureManager.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FeatureVersionExists(id))
+                if (!FeatureVersionExists(id, version))
                 {
                     return NotFound();
                 }
@@ -69,6 +91,12 @@ namespace FeatureManager.Controllers
         }
 
         // POST: api/FeatureVersions
+        /// <summary>
+        /// Add new Feature Version
+        /// </summary>
+        /// <param name="featureVersion">New Feature Version to add</param>
+        /// <returns>Feature Version added</returns>
+        [Authorize]
         [ResponseType(typeof(FeatureVersion))]
         public async Task<IHttpActionResult> PostFeatureVersion(FeatureVersion featureVersion)
         {
@@ -85,7 +113,7 @@ namespace FeatureManager.Controllers
             }
             catch (DbUpdateException)
             {
-                if (FeatureVersionExists(featureVersion.VersionMajor))
+                if (FeatureVersionExists(featureVersion.FeatureID, featureVersion.Version.ToString()))
                 {
                     return Conflict();
                 }
@@ -99,8 +127,15 @@ namespace FeatureManager.Controllers
         }
 
         // DELETE: api/FeatureVersions/5
+        /// <summary>
+        /// Delete Feature Version
+        /// </summary>
+        /// <param name="id">Feature Version ID</param>
+        /// <param name="version">Version Number</param>
+        /// <returns>Status Code of the operation</returns>
+        [Authorize]
         [ResponseType(typeof(FeatureVersion))]
-        public async Task<IHttpActionResult> DeleteFeatureVersion(int id)
+        public async Task<IHttpActionResult> DeleteFeatureVersion(int id, string version)
         {
             FeatureVersion featureVersion = await db.FeatureVersions.FindAsync(id);
             if (featureVersion == null)
@@ -123,9 +158,11 @@ namespace FeatureManager.Controllers
             base.Dispose(disposing);
         }
 
-        private bool FeatureVersionExists(int id)
+        private bool FeatureVersionExists(int id, string version)
         {
-            return db.FeatureVersions.Count(e => e.VersionMajor == id) > 0;
+            System.Version ver = new System.Version(version);
+
+            return db.FeatureVersions.Where(w => w.VersionMajor.Equals(ver.Major) && w.VersionMinor.Equals(ver.Minor) && w.VersionBuild.Equals(ver.Build) && w.VersionRevision.Equals(ver.Revision) && w.FeatureID.Equals(id)).Count() > 0;
         }
     }
 }

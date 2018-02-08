@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FeatureManager.Code;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -13,6 +14,8 @@ namespace FeatureManager
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            
+            config.MessageHandlers.Add(new AuthenticatorHandler());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
